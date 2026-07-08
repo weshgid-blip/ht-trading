@@ -87,4 +87,17 @@ export const TRADERS_HUB_LINK_CONFIG = {
 // ];
 //
 // Empty by default for white-labeling
-export const MenuItems: MenuItemsConfig[] = [];
+export const MenuItems: MenuItemsConfig[] = [
+    {
+        as: 'a',
+        href: '/free-bots',
+        icon: <TradershubLogo iconSize='xs' />,
+        label: localize('Free Bots'),
+    },
+    {
+        as: 'a',
+        href: '/hybrid-bots',
+        icon: <TradershubLogo iconSize='xs' />,
+        label: localize('Hybrid Bots'),
+    },
+];

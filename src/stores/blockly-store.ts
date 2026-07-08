@@ -1,5 +1,5 @@
 // @ts-nocheck — vendored bot code with known upstream type gaps; see AGENTS.md
-import { action, computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { tabs_title } from '@/constants/bot-contents';
 import { getSavedWorkspaces, onWorkspaceResize } from '@/external/bot-skeleton';
 import { getSetting, storeSetting } from '@/utils/settings';
@@ -47,16 +47,25 @@ export default class BlocklyStore {
     _has_saved_bots = false;
 
     // Method to check for saved bots and update the cache
-    checkForSavedBots = async (): Promise<void> => {
-        try {
-            const workspaces = await getSavedWorkspaces();
-            // Use action to update observable property
+// Method to check for saved bots and update the cache
+checkForSavedBots = async (): Promise<void> => {
+    try {
+        const workspaces = await getSavedWorkspaces();
+        
+        // Wrap the successful state update in runInAction
+        runInAction(() => {
             this._has_saved_bots = Array.isArray(workspaces) && workspaces.length > 0;
-        } catch (e) {
-            console.error('Error checking for saved workspaces:', e);
+        });
+        
+    } catch (e) {
+        console.error('Error checking for saved workspaces:', e);
+        
+        // Wrap the error state update in runInAction
+        runInAction(() => {
             this._has_saved_bots = false;
-        }
-    };
+        });
+    }
+};
 
     setActiveTab = (tab: string): void => {
         this.active_tab = tab;

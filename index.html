@@ -1,99 +1,661 @@
-<!doctype html>
-<html lang="en" dir="auto" class="light">
-    <head>
-        <!-- Google Tag Manager -->
-        <script>
-            (function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s),
-                    dl = l != 'dataLayer' ? '&l=' + l : '';
-                j.async = true;
-                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-KV9538TF');
-        </script>
-        <!-- End Google Tag Manager -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HT Trading — Preloader</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="<%= assetPrefix %>/deriv-logo.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <meta name="title" content="Automate Your Trades | Deriv Bot" />
-        <meta
-            name="description"
-            content="Import your current bot or learn how to create a trading bot from scratch with our detailed guides, FAQs, and tutorials. Start with a quick strategy!"
-        />
-        <meta property="og:title" content="Deriv Bot" />
-        <meta
-            property="og:description"
-            content="Import your current bot or learn how to create a trading bot from scratch with our detailed guides, FAQs, and tutorials. Start with a quick strategy!"
-        />
-        <title>Automate Your Trades | Deriv Bot</title>
-        <style>
-            :root {
-                font-size: 62.5%;
-            }
-        </style>
-    </head>
+  :root {
+    font-size: 62.5%;
+    --bg: #000000;
+    --surface: #000000;
+    --binary-dim: #51501c;
+    --teal: #fff200;
+    --teal-dim: #fff704;
+    --gold: #e8b64a;
+    --text-primary: #eaf5f1;
+    --text-muted: #6f8a85;
+  }
 
-    <body class="body theme theme--light">
-        <!-- Google Tag Manager (noscript) -->
-        <noscript
-            ><iframe
-                src="https://www.googletagmanager.com/ns.html?id=GTM-KV9538TF"
-                height="0"
-                width="0"
-                style="display: none; visibility: hidden"
-            ></iframe
-        ></noscript>
-        <!-- End Google Tag Manager (noscript) -->
+  * { box-sizing: border-box; }
 
-        <div id="modal_root" class="modal-root"></div>
-        <div id="popup_root" class="popup-root"></div>
-        <div id="root"></div>
-        <!-- LiveChat script -->
-        <script type="text/javascript" defer>
-            window.__lc = window.__lc || {};
-            window.__lc.license = 12049137;
-            window.__lc.asyncInit = true;
-            (function (n, t, c) {
-                function i(n) {
-                    return e._h ? e._h.apply(null, n) : e._q.push(n);
-                }
-                var e = {
-                    _q: [],
-                    _h: null,
-                    _v: '2.0',
-                    on: function () {
-                        i(['on', c.call(arguments)]);
-                    },
-                    once: function () {
-                        i(['once', c.call(arguments)]);
-                    },
-                    off: function () {
-                        i(['off', c.call(arguments)]);
-                    },
-                    get: function () {
-                        if (!e._h) throw new Error('[LiveChatWidget] You can’t use getters before load.');
-                        return i(['get', c.call(arguments)]);
-                    },
-                    call: function () {
-                        i(['call', c.call(arguments)]);
-                    },
-                    init: function () {
-                        setTimeout(() => {
-                            var n = t.createElement('script');
-                            ((n.async = !0),
-                                (n.type = 'text/javascript'),
-                                (n.src = 'https://cdn.livechatinc.com/tracking.js'),
-                                t.head.appendChild(n));
-                        }, 3000);
-                    },
-                };
-                (!n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e));
-            })(window, document, [].slice);
-        </script>
-        <!-- End LiveChat script -->
-    </body>
+  body { margin: 0; background: var(--bg); }
+
+  /* Styles for your preloader */
+  .preloader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+  }
+
+  #binary-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, rgba(5,10,9,0.15) 0%, rgba(5,10,9,0.85) 78%, var(--bg) 100%);
+    pointer-events: none;
+  }
+
+  .preloader-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2.4rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    color: var(--teal-dim);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .brand-mark {
+    width: 5.2rem;
+    height: 5.2rem;
+    border: 1px solid var(--teal-dim);
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--teal);
+    background: rgb(0, 0, 0);
+    box-shadow: 0 0 24px rgb(255, 251, 3);
+  }
+
+  .brand-name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 3.8rem;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .brand-name span {
+    color: var(--teal);
+    text-shadow: 0 0 18px rgb(255, 238, 1);
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin: 0 0 0.4rem;
+  }
+
+  .tagline strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .tagline-sub {
+    font-size: 1.3rem;
+    color: var(--teal-dim);
+    letter-spacing: 0.03em;
+    margin: 0 0 3.6rem;
+  }
+
+  .loading-bar-shell {
+    width: 34rem;
+    max-width: 72vw;
+  }
+
+  .loading-bar-track {
+    position: relative;
+    width: 100%;
+    height: 0.7rem;
+    background: var(--surface);
+    border: 1px solid var(--binary-dim);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .loading-bar-fill {
+    position: relative;
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--teal-dim), var(--teal));
+    box-shadow: 0 0 12px rgb(255, 242, 4);
+    animation: fill-progress 3.2s cubic-bezier(0.5, 0, 0.2, 1) infinite;
+    overflow: hidden;
+  }
+
+  .loading-bar-fill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      rgb(0, 0, 0) 0 2px,
+      transparent 2px 4px
+    );
+    mix-blend-mode: multiply;
+  }
+
+  .digit-stream {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #000000;
+    letter-spacing: 0.3em;
+    animation: scroll-digits 1.4s linear infinite;
+  }
+
+  @keyframes scroll-digits {
+    from { transform: translate(0, -50%); }
+    to { transform: translate(-9.6rem, -50%); }
+  }
+
+  @keyframes fill-progress {
+    0%   { width: 4%; }
+    70%  { width: 92%; }
+    88%  { width: 98%; }
+    100% { width: 4%; }
+  }
+
+  .loading-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  #loading-status::after {
+    content: '';
+    display: inline-block;
+    width: 1ch;
+  }
+
+  #loading-percent {
+    color: var(--teal);
+    font-weight: 500;
+    min-width: 4.2rem;
+    text-align: right;
+  }
+
+  @media (max-width: 480px) {
+    .brand-name { font-size: 2.8rem; }
+    .brand-mark { width: 4.2rem; height: 4.2rem; font-size: 1.6rem; }
+    .tagline { font-size: 1.3rem; }
+    .tagline-sub { font-size: 1.15rem; margin-bottom: 3rem; }
+  }
+  /* Smooth fade-out class */
+.preloader-container.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  pointer-events: none; /* Prevents users from clicking on hidden preloader */
+}
+/* --- Popup Overlay Styles --- */
+      .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(5, 10, 9, 0.90); /* Dark transparent backdrop */
+        backdrop-filter: blur(8px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9998; /* Sits just below the preloader */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease-in-out;
+        font-family: 'Orbitron', system-ui, sans-serif;
+      }
+
+      .popup-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .popup-box {
+        background-color: var(--surface, #000000);
+        border: 1px solid var(--teal, #e2f60d);
+        border-radius: 12px;
+        padding: 40px;
+        max-width: 450px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 0 30px rgb(0, 0, 0);
+        transform: translateY(20px);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .popup-overlay.active .popup-box {
+        transform: translateY(0);
+      }
+
+      .popup-title {
+        color: var(--text-primary, #eaf5f1);
+        font-size: 2.2rem;
+        margin-bottom: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .popup-desc {
+        color: var(--text-muted, #fbff05e7);
+        font-size: 1.4rem;
+        margin-bottom: 30px;
+        line-height: 1.5;
+      }
+
+      /* High-Contrast Buttons */
+      .btn-social {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #ffffff;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-social:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-telegram {
+        background-color: #0cadd5;
+        box-shadow: 0 4px 15px rgb(0, 0, 0);
+      }
+      .btn-telegram:hover { box-shadow: 0 6px 20px rgb(5, 230, 255); }
+
+      .btn-whatsapp {
+        background-color: #04ff00;
+        box-shadow: 0 4px 15px rgb(0, 0, 0);
+      }
+      .btn-whatsapp:hover { box-shadow: 0 6px 20px rgb(0, 255, 94); }
+
+      .btn-continue {
+        margin-top: 25px;
+        background: transparent;
+        border: 1px solid var(--gold, #f5ad11);
+        color: var(--gold, #ffae00);
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: inherit;
+      }
+
+      .btn-continue:hover {
+        background-color: rgb(0, 0, 0);
+      }
+      /* --- Landing Page Auth Wall --- */
+      .landing-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--surface, #000000); /* Premium dark background */
+        z-index: 9995; /* Sits below the community popup, but ABOVE the dashboard */
+        display: flex;
+        flex-direction: column;
+        font-family: 'Orbitron', system-ui, sans-serif;
+      }
+
+      /* Top Navigation Bar */
+      .landing-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 40px;
+        border-bottom: 1px solid rgb(0, 0, 0); /* Subtle teal border */
+      }
+
+      .landing-logo {
+        color: var(--text-primary, #eaf5f1);
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .landing-logo span {
+        color: var(--teal, #fff700); /* HT TRADING with teal accent */
+      }
+
+      /* Top Right Auth Buttons */
+      .landing-auth-btns {
+        display: flex;
+        gap: 16px;
+      }
+
+      .btn-auth {
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .btn-login {
+        background: transparent;
+        border: 1px solid var(--teal, #ffff05);
+        color: var(--teal, #ffe602);
+      }
+
+      .btn-login:hover {
+        background: rgb(0, 0, 0);
+      }
+
+      .btn-signup {
+        background: var(--teal, #fff706);
+        border: 1px solid var(--teal, #fbde03);
+        color: #000000;
+      }
+
+      .btn-signup:hover {
+        box-shadow: 0 0 15px rgb(239, 232, 45);
+      }
+
+      /* Center Content */
+      .landing-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      .landing-title {
+        color: var(--text-primary, #eaf5f1);
+        font-size: 3.2rem;
+        max-width: 800px;
+        margin-bottom: 16px;
+        line-height: 1.3;
+      }
+
+      .landing-subtitle {
+        color: var(--text-muted, #daaa1a);
+        font-size: 1.6rem;
+        max-width: 650px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      /* Main Call to Action Button */
+      .btn-cta-large {
+        margin-top: 30px;
+        background: var(--gold, #e8b64a);
+        color: #000;
+        font-size: 1.6rem;
+        font-weight: 700;
+        padding: 18px 48px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-family: inherit;
+      }
+
+      .btn-cta-large:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgb(0, 0, 0);
+      }
+</style>
+</head>
+<body>
+  <!-- 1. The preloader is now OUTSIDE, so React won't auto-delete it -->
+  <div class="preloader-container" id="preloader">
+    <canvas id="binary-rain"></canvas>
+    <div class="vignette"></div>
+
+    <div class="preloader-content">
+      <div class="eyebrow">Automated Trading Engine</div>
+      
+      <div class="brand-row">
+        <div class="brand-mark">HT</div>
+        <div class="brand-name">HT&nbsp;<span>TRADING</span></div>
+      </div>
+
+      <p class="tagline"><strong>Premium free trading tools</strong></p>
+      <p class="tagline-sub">Automated digit tracking analytics</p>
+
+      <div class="loading-bar-shell">
+        <div class="loading-bar-track">
+          <div class="loading-bar-fill">
+            <div class="digit-stream" id="digit-stream"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading-meta">
+        <span id="loading-status">Initializing components...</span>
+        <span id="loading-percent">04%</span>
+      </div>
+    </div>
+  </div>
+  <!-- The Community Popup (Hidden by default) -->
+  <div class="popup-overlay" id="channel-popup">
+    <div class="popup-box">
+      <h2 class="popup-title">JOIN HT TRADING</h2>
+      <p class="popup-desc">Get the latest profitable strategies, custom bots, and premium support directly in our channels.</p>
+      
+      <a href="https://t.me/GFX2025" target="_blank" class="btn-social btn-telegram">
+        JOIN TELEGRAM
+      </a>
+      
+      <a href="https://whatsapp.com/channel/0029VbCpVUIGJP8Kmq8PL505" target="_blank" class="btn-social btn-whatsapp">
+        JOIN WHATSAPP
+      </a>
+
+      <button class="btn-continue" id="close-popup">Continue to Bot Platform &rarr;</button>
+    </div>
+  </div>
+
+  <!-- 2. Empty main app container for your framework -->
+   <!-- The Main Landing Page (Hides the dashboard until logged in) -->
+  <div class="landing-overlay" id="auth-landing-page">
+    
+    <!-- Top Left Logo & Top Right Login/Signup -->
+    <header class="landing-header">
+      <div class="landing-logo">HT <span>TRADING</span></div>
+      <div class="landing-auth-btns">
+        <button class="btn-auth btn-login">Log in</button>
+        <button class="btn-auth btn-signup">Create account</button>
+      </div>
+    </header>
+    
+    <!-- Center Hero Copy -->
+    <main class="landing-body">
+      <h1 class="landing-title">Welcome to HT Trading Hub</h1>
+      <p class="landing-subtitle">Where you get to trade with the best automated robots and strategies.</p>
+      <p class="landing-subtitle">If you want to start your trading journey, open an account with the button below.</p>
+      
+      <button class="btn-cta-large">Open an Account</button>
+    </main>
+
+  </div>
+  <div id="root"></div>
+
+  <!-- 3. ADD THIS SCRIPT right before the closing body tag -->
+ <script>
+    window.addEventListener('load', () => {
+      // --- Elements ---
+      const preloader = document.getElementById('preloader');
+      const popup = document.getElementById('channel-popup');
+      const closePopupBtn = document.getElementById('close-popup');
+      
+      const landingPage = document.getElementById('auth-landing-page');
+      const loginBtn = document.querySelector('.btn-login');
+      const signupBtn = document.querySelector('.btn-signup');
+      const ctaBtn = document.querySelector('.btn-cta-large');
+
+      // --- 1. Preloader Logic ---
+      setTimeout(() => {
+        if(preloader) {
+          preloader.classList.add('fade-out');
+          setTimeout(() => {
+            preloader.remove();
+            if(popup) popup.classList.add('active'); 
+          }, 600);
+        }
+      }, 2500); 
+
+      // --- 2. Popup Logic ---
+      if(closePopupBtn) {
+        closePopupBtn.addEventListener('click', () => {
+          popup.classList.remove('active');
+          setTimeout(() => {
+            popup.remove();
+          }, 600);
+        });
+      }
+
+      // --- 3. Advanced Auth Routing ---
+      // This function finds the React app's native buttons and clicks them for you
+     // --- 3. Advanced Auth Routing ---
+function triggerRealAuth(isSignup = false) {
+    // We will bypass the automated click for now to avoid triggering 
+    // the Cloudflare WAF block while you are developing.
+    
+    // Just fade out the landing page so you can see your dashboard
+    landingPage.style.transition = 'opacity 0.5s ease';
+    landingPage.style.opacity = '0';
+    
+    setTimeout(() => { 
+        landingPage.style.display = 'none'; 
+        console.log("Landing page bypassed for development.");
+    }, 500);
+}
+
+      // Attach the new routing function to your landing page buttons
+      if(loginBtn) loginBtn.addEventListener('click', () => triggerRealAuth(false));
+      
+      // Both of these will trigger the sign-up flow
+      if(signupBtn) signupBtn.addEventListener('click', () => triggerRealAuth(true));
+      if(ctaBtn) ctaBtn.addEventListener('click', () => triggerRealAuth(true));
+      
+    });
+  </script>
+
+
+
+
+<script>
+  // Binary rain background
+  const canvas = document.getElementById('binary-rain');
+  const ctx = canvas.getContext('2d');
+  let width, height, columns, drops;
+  const fontSize = 16;
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / fontSize);
+    drops = new Array(columns).fill(0).map(() => Math.random() * -100);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawRain() {
+    ctx.fillStyle = 'rgba(5, 10, 9, 0.13)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+
+    for (let i = 0; i < columns; i++) {
+      const char = Math.random() > 0.5 ? '1' : '0';
+      const y = drops[i] * fontSize;
+
+      const isLead = Math.random() > 0.975;
+      ctx.fillStyle = isLead ? 'rgba(20, 224, 174, 0.85)' : 'rgba(14, 60, 52, 0.65)';
+      ctx.fillText(char, i * fontSize, y);
+
+      if (y > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  setInterval(drawRain, 55);
+
+  // Digit stream inside loading bar
+  const stream = document.getElementById('digit-stream');
+  let digits = '';
+  for (let i = 0; i < 60; i++) digits += Math.random() > 0.5 ? '1' : '0';
+  stream.textContent = digits + ' ' + digits;
+
+  // Status + percent readout, synced loosely to the bar's CSS animation loop
+  const statusEl = document.getElementById('loading-status');
+  const percentEl = document.getElementById('loading-percent');
+  const statuses = [
+    'Initializing robots',
+    'Syncing market feed',
+    'Calibrating digit patterns',
+    'Loading strategy presets',
+    'Finalizing setup'
+  ];
+  let step = 0;
+  let percent = 4;
+  setInterval(() => {
+    percent += Math.random() * 14;
+    if (percent >= 98) {
+      percent = 4;
+      step = 0;
+    } else {
+      step = Math.min(statuses.length - 1, Math.floor((percent / 98) * statuses.length));
+    }
+    statusEl.textContent = statuses[step];
+    percentEl.textContent = String(Math.min(99, Math.round(percent))).padStart(2, '0') + '%';
+  }, 480);
+</script>
+
+</body>
 </html>

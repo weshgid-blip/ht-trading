@@ -2,17 +2,66 @@
 @use 'components/shared/styles/mixins' as *;
 
 .app-header {
+    background-color: #000000 !important; // Forced to pitch black
+    color: hsl(0, 0%, 0%) !important;
+
+    // Ensures all general header text and links stand out on the black bar
+    span, a, div, h1 {
+        color: #ffffff !important;
+    }
+
+    // Target the Login / Sign Up actions on the right bar
+    button, a {
+        // Turning the default red primary button (Sign Up) into a premium theme yellow
+        &[class*="signup"], &[class*="btn--primary"], &[class*="primary"] {
+            background-color: #ffcc00 !important;
+            color: #000000 !important;         // Dark text on yellow button
+            border: none !important;
+            font-weight: 600 !important;
+        }
+
+        // Light hover effect for the transparent Login link
+      // Smooth, faded yellow hover effect for the Login link
+   // Smooth, faded yellow hover effect for the Login link
+      // Smooth hover effect for the Login link (glands perfectly on black)
+     // Smooth hover effect for the Login link
+    // Smooth hover effect for the Login link
+    // Smooth hover effect for the Login link
+    // Smooth hover effect for the Login link
+       // Smooth hover effect for the Login link (Catching framework specific classes)
+        &[class*="login"], &[class*="secondary"], &[class*="tertiary"] {
+            isolation: isolate !important; 
+            background-color: transparent !important; 
+            color: #ffffff !important; 
+            transition: all 0.25s ease-in-out !important; 
+
+            // Forces the custom glow and yellow text on hover
+            &:hover {
+                background-color: rgba(220, 238, 22, 0.1) !important; 
+                color: #ffcc00 !important; 
+            }
+
+            // Ensures inner text also turns yellow
+            &:hover * {
+                color: #ffcc00 !important; 
+            }
+        }
+    } // <--- ADD THIS BRACKET to close the "button, a" block
+
     &__account-settings {
         padding-inline-end: 1.2rem;
         border-inline-end: 0.1rem solid var(--general-section-1);
     }
+    
+    /* ... keep the rest of your existing code exactly as it is ... */
+
 
     &__account-settings,
     .notifications__wrapper,
     &__menu {
         svg > path,
         svg > g > path {
-            fill: var(--text-prominent);
+            fill: #ffcc00 !important;
         }
     }
 }
@@ -292,4 +341,41 @@
 @keyframes auth-spinner-rotate {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
+}
+// ... (Your other header code above) ...
+
+// 1. Existing code for your Run button
+button[class*="run"], 
+button[class*="quick"], 
+[class*="btn--primary"] {
+    background-color: #ffcc00 !important;
+    color: #000000 !important;
+    border: none !important;
+    font-weight: 600 !important;
+    transition: background-color 0.2s ease-in-out !important;
+
+    svg > path, 
+    svg > g > path, 
+    svg {
+        fill: #000000 !important;
+    }
+
+    &:hover {
+        background-color: #e6b800 !important; 
+        color: #000000 !important;
+    }
+}
+
+// 2. Add this new block right below it for the stubborn Quick Strategy button
+[style*="background-color: rgb(210, 31, 60)"],
+[style*="background-color: #d21f3c"],
+.btn--primary--red {
+    background-color: #ffcc00 !important;
+    color: #000000 !important;
+    border: none !important;
+}
+
+[style*="background-color: rgb(210, 31, 60)"] *, 
+[style*="background-color: #d21f3c"] * {
+    color: #000000 !important;
 }
