@@ -483,46 +483,178 @@
     </div>
   </div>
   <!-- The Community Popup (Hidden by default) -->
-  <div class="popup-overlay" id="channel-popup">
-    <div class="popup-box">
-      <h2 class="popup-title">JOIN HT TRADING</h2>
-      <p class="popup-desc">Get the latest profitable strategies, custom bots, and premium support directly in our channels.</p>
-      
-      <a href="https://t.me/GFX2025" target="_blank" class="btn-social btn-telegram">
-        JOIN TELEGRAM
-      </a>
-      
-      <a href="https://whatsapp.com/channel/0029VbCpVUIGJP8Kmq8PL505" target="_blank" class="btn-social btn-whatsapp">
-        JOIN WHATSAPP
-      </a>
+  <!-- The Community Popup (Hidden by default) -->
+    <div class="popup-overlay" id="channel-popup" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    ">
+        <div class="popup-box" style="
+            background: #0a0d14;
+            border: 1px solid #d4af37;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-align: center;
+            color: #ffffff;
+            box-sizing: border-box;
+        ">
+            <!-- Close Button (X in corner) -->
+            <button id="close-popup-x" onclick="document.getElementById('channel-popup').style.display='none'" style="
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                color: #566275;
+                font-size: 1.2rem;
+                cursor: pointer;
+            ">✕</button>
 
-      <button class="btn-continue" id="close-popup">Continue to Bot Platform &rarr;</button>
+            <!-- Branding Logo Area -->
+            <div style="margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span style="font-size: 1.6rem; font-weight: 900; letter-spacing: 1px;">
+                    <span style="color: #ffffff;">HT</span> <span style="color: #ffc107;">TRADING</span>
+                </span>
+            </div>
+
+            <!-- Title -->
+            <h2 class="popup-title" style="
+                font-size: 1.8rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin: 0 0 0.5rem 0;
+                color: #ffffff;
+            ">JOIN HT TRADING</h2>
+
+            <!-- Decorative Gold Glow Line -->
+            <div style="
+                height: 1px;
+                width: 60%;
+                background: linear-gradient(90deg, transparent, #ffc107, transparent);
+                margin: 0 auto 1.5rem auto;
+            "></div>
+
+            <!-- Description -->
+            <p class="popup-desc" style="
+                font-size: 0.95rem;
+                color: #94a3b8;
+                line-height: 1.6;
+                margin: 0 0 2rem 0;
+                padding: 0 10px;
+            ">Get the latest profitable strategies, custom bots, and premium support directly in our channels.</p>
+
+            <!-- Telegram Button -->
+            <a href="https://t.me/GFX2025" target="_blank" style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: linear-gradient(90deg, #0066cc 0%, #0052a3 100%);
+                color: #ffffff;
+                text-decoration: none;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                font-size: 1rem;
+                box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+                box-sizing: border-box;
+            ">
+                <span style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.2rem;">✈</span> JOIN TELEGRAM
+                </span>
+                <span>→</span>
+            </a>
+
+            <!-- WhatsApp Button -->
+            <a href="https://whatsapp.com/channel/0029VbCpVUIGJP8Km" target="_blank" style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: linear-gradient(90deg, #00b050 0%, #008f3e 100%);
+                color: #ffffff;
+                text-decoration: none;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-weight: 600;
+                margin-bottom: 2rem;
+                font-size: 1rem;
+                box-shadow: 0 4px 12px rgba(0, 176, 80, 0.3);
+                box-sizing: border-box;
+            ">
+                <span style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 1.2rem;">💬</span> JOIN WHATSAPP
+                </span>
+                <span>→</span>
+            </a>
+
+            <!-- OR Separator -->
+            <div style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+                color: #ffc107;
+                font-size: 0.85rem;
+                font-weight: 600;
+                margin-bottom: 2rem;
+            ">
+                <div style="height: 1px; width: 60px; background-color: rgba(255,193,7,0.2);"></div>
+                OR
+                <div style="height: 1px; width: 60px; background-color: rgba(255,193,7,0.2);"></div>
+            </div>
+
+            <!-- Continue Button -->
+            <button class="btn-continue" id="close-popup" style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+                background: transparent;
+                border: 1px solid #ffc107;
+                color: #ffffff;
+                padding: 1rem;
+                border-radius: 12px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                margin-bottom: 1.5rem;
+                transition: background 0.2s;
+            }">
+                🤖 Continue to Bot Platform →
+            </button>
+
+            <!-- Footer Guarantee -->
+            <div style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                color: #64748b;
+                font-size: 0.8rem;
+            ">
+                <span>🛡</span> Secure. Reliable. Built for Traders.
+            </div>
+        </div>
     </div>
-  </div>
 
   <!-- 2. Empty main app container for your framework -->
    <!-- The Main Landing Page (Hides the dashboard until logged in) -->
-  <div class="landing-overlay" id="auth-landing-page">
-    
-    <!-- Top Left Logo & Top Right Login/Signup -->
-    <header class="landing-header">
-      <div class="landing-logo">HT <span>TRADING</span></div>
-      <div class="landing-auth-btns">
-        <button class="btn-auth btn-login">Log in</button>
-        <button class="btn-auth btn-signup">Create account</button>
-      </div>
-    </header>
-    
-    <!-- Center Hero Copy -->
-    <main class="landing-body">
-      <h1 class="landing-title">Welcome to HT Trading Hub</h1>
-      <p class="landing-subtitle">Where you get to trade with the best automated robots and strategies.</p>
-      <p class="landing-subtitle">If you want to start your trading journey, open an account with the button below.</p>
-      
-      <button class="btn-cta-large">Open an Account</button>
-    </main>
-
-  </div>
+  
   <div id="root"></div>
 
   <!-- 3. ADD THIS SCRIPT right before the closing body tag -->

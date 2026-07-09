@@ -173,8 +173,8 @@ const AppWrapper = observer(() => {
                 threshold: 0.5, // set offset 0.1 means trigger if atleast 10% of element in viewport
             }
         );
-        observer_dashboard.observe(el_dashboard);
-        observer_tutorial.observe(el_tutorial);
+       if (el_dashboard) observer_dashboard.observe(el_dashboard);
+if (el_tutorial) observer_tutorial.observe(el_tutorial);
     });
 
     React.useEffect(() => {
@@ -366,141 +366,201 @@ const AppWrapper = observer(() => {
         }
     };
     // [/AI]
-    return (
-        <React.Fragment>
-            <div className='main'>
-                <div
-                    className={classNames('main__container', {
-                        'main__container--active': active_tour && active_tab === DASHBOARD && !isDesktop,
-                    })}
-                >
-                    <div>
-                        {!isDesktop && left_tab_shadow && <span className='tabs-shadow tabs-shadow--left' />}{' '}
-                        <Tabs active_index={active_tab} className='main__tabs' onTabItemClick={handleTabChange} top>
-                            <div
-                                label={
-                                    <>
-                                        <LabelPairedObjectsColumnCaptionRegularIcon
-                                            height='24px'
-                                            width='24px'
-                                            fill='var(--text-general)'
-                                        />
-                                        <Localize i18n_default_text='Dashboard' />
-                                    </>
-                                }
-                                id='id-dbot-dashboard'
-                            >
-                                <Dashboard handleTabChange={handleTabChange} />
+return (
+    <React.Fragment>
+        <div className='main'>
+            <div className='landing-page'>
+                <header className='landing-page__header'>
+                    <div className='landing-page__brand'>
+                        <span>HT</span>
+                        <span>TRADING</span>
+                    </div>
+                    <nav className='landing-page__nav' aria-label='Primary navigation'>
+                        <a href='#features'><Localize i18n_default_text='Features' /></a>
+                        <a href='#pricing'><Localize i18n_default_text='Pricing' /></a>
+                        <a href='#about'><Localize i18n_default_text='About' /></a>
+                    </nav>
+                    <div className='landing-page__actions'>
+                        <button className='landing-page__ghost-button' onClick={handleLoginGeneration}>
+                            <Localize i18n_default_text='Log In' />
+                        </button>
+                        <button
+                            className='landing-page__primary-button'
+                            onClick={() => {
+                                console.log('Navigate to Sign Up');
+                            }}
+                        >
+                            <Localize i18n_default_text='Create Account' />
+                        </button>
+                    </div>
+                </header>
+
+                <main className='landing-page__content'>
+                    <section className='landing-page__hero'>
+                        <div className='landing-page__hero-copy'>
+                            <div className='landing-page__badge'>
+                                ⚡ <Localize i18n_default_text='Automated. Smarter. Faster.' />
                             </div>
-                            <div
-                                label={
-                                    <>
-                                        <LabelPairedPuzzlePieceTwoCaptionBoldIcon
-                                            height='24px'
-                                            width='24px'
-                                            fill='var(--text-general)'
-                                        />
-                                        <Localize i18n_default_text='Bot Builder' />
-                                    </>
-                                }
-                                id='id-bot-builder'
-                            />
-                            <div
-                                label={
-                                    <>
-                                        <LabelPairedChartLineCaptionRegularIcon
-                                            height='24px'
-                                            width='24px'
-                                            fill='var(--text-general)'
-                                        />
-                                        <Localize i18n_default_text='Charts' />
-                                    </>
-                                }
-                                id={
-                                    is_chart_modal_visible || is_trading_view_modal_visible
-                                        ? 'id-charts--disabled'
-                                        : 'id-charts'
-                                }
-                            >
-                                <Suspense
-                                    fallback={<ChunkLoader message={localize('Please wait, loading chart...')} />}
+
+                            <h1 className='landing-page__title'>
+                                <Localize i18n_default_text='Trade Deriv indices like a' />{' '}
+                                <span><Localize i18n_default_text='professional' /></span>
+                            </h1>
+
+                            <p className='landing-page__description'>
+                                <Localize i18n_default_text='Experience advanced automated trading robots, powerful analytics, and lightning-fast execution—all in one premium platform.' />
+                            </p>
+
+                            <div className='landing-page__hero-actions'>
+                                <button
+                                    className='landing-page__primary-button'
+                                    onClick={() => {
+                                        console.log('Navigate to Sign Up');
+                                    }}
                                 >
-                                    <ChartWrapper show_digits_stats={false} />
-                                </Suspense>
+                                    <Localize i18n_default_text='Create Free Account' />
+                                </button>
+                                <button className='landing-page__ghost-button' onClick={handleLoginGeneration}>
+                                    <Localize i18n_default_text='Log In' />
+                                </button>
                             </div>
-                            <div
-                                label={
-                                    <>
-                                        <LegacyGuide1pxIcon
-                                            height='16px'
-                                            width='16px'
-                                            fill='var(--text-general)'
-                                            className='icon-general-fill-g-path'
-                                        />
-                                        <Localize i18n_default_text='Tutorials' />
-                                    </>
-                                }
-                                id='id-tutorials'
-                            >
-                                <div className='tutorials-wrapper'>
-                                    <Suspense
-                                        fallback={
-                                            <ChunkLoader message={localize('Please wait, loading tutorials...')} />
-                                        }
-                                    >
-                                        <Tutorial handleTabChange={handleTabChange} />
-                                    </Suspense>
+                        </div>
+
+                        <div className='landing-page__hero-panel'>
+                            {[
+                                { title: '+127.85%', subtitle: 'Profit', accent: '#4caf50' },
+                                { title: 'Boom 500 Index', subtitle: '7,862.34 · +1.89% ▲', accent: '#4caf50' },
+                                { title: 'Volatility 100 Index', subtitle: '25,148.65 · +2.35% ▲', accent: '#4caf50' },
+                                { title: 'Crash 300 Index', subtitle: '4,215.75 · -0.73% ▼', accent: '#e24b4a' }
+                            ].map((card, idx) => (
+                                <div key={idx} className='landing-page__panel-card'>
+                                    <div className='landing-page__panel-title' style={{ color: card.accent }}>
+                                        {card.title}
+                                    </div>
+                                    <div className='landing-page__panel-subtitle'>{card.subtitle}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className='landing-page__ticker-row' aria-label='Market ticker widgets'>
+                        {[
+                            { symbol: 'EUR/USD', value: '1.0872', change: '+0.24%' },
+                            { symbol: 'BTC/USD', value: '68,412.90', change: '+1.16%' },
+                            { symbol: 'XAU/USD', value: '2,340.10', change: '-0.42%' },
+                            { symbol: 'NASDAQ', value: '18,420.15', change: '+0.71%' }
+                        ].map((ticker, idx) => (
+                            <div key={idx} className='landing-page__ticker-item'>
+                                <div>
+                                    <div className='landing-page__ticker-symbol'>{ticker.symbol}</div>
+                                    <div className='landing-page__ticker-value'>{ticker.value}</div>
+                                </div>
+                                <div className={`landing-page__ticker-change ${ticker.change.startsWith('+') ? 'is-positive' : 'is-negative'}`}>
+                                    {ticker.change}
                                 </div>
                             </div>
-                        </Tabs>
-                        {!isDesktop && right_tab_shadow && <span className='tabs-shadow tabs-shadow--right' />}{' '}
-                    </div>
-                </div>
-            </div>
-            <DesktopWrapper>
-                <div className='main__run-strategy-wrapper'>
-                    <RunStrategy />
-                    <RunPanel />
-                </div>
-                <ChartModal />
-                <TradingViewModal />
-            </DesktopWrapper>
-            <MobileWrapper>{!is_open && <RunPanel />}</MobileWrapper>
-            <Dialog
-                cancel_button_text={cancel_button_text || localize('Cancel')}
-                className='dc-dialog__wrapper--fixed'
-                confirm_button_text={ok_button_text || localize('Ok')}
-                has_close_icon
-                is_mobile_full_width={false}
-                is_visible={is_dialog_open}
-                onCancel={onCancelButtonClick}
-                onClose={onCloseDialog}
-                onConfirm={onOkButtonClick || onCloseDialog}
-                portal_element_id='modal_root'
-                title={title}
-                login={handleLoginGeneration}
-                dismissable={dismissable} // Prevents closing on outside clicks
-                is_closed_on_cancel={is_closed_on_cancel}
-            >
-                {message}
-            </Dialog>
+                        ))}
+                    </section>
 
-            {/* Trade Type Confirmation Modal */}
-            {(() => {
-                const modalProps = getTradeTypeModalProps();
-                return (
-                    <TradeTypeConfirmationModal
-                        is_visible={modalProps.is_visible}
-                        trade_type_display_name={modalProps.trade_type_display_name}
-                        current_trade_type={modalProps.current_trade_type}
-                        current_trade_type_display_name={modalProps.current_trade_type_display_name}
-                        onConfirm={modalProps.onConfirm}
-                        onCancel={modalProps.onCancel}
-                    />
-                );
-            })()}
-        </React.Fragment>
-    );
+                    <section className='landing-page__features' id='features'>
+                        {[
+                            { title: 'Automated Robots', desc: 'Smart robots that scan the market 24/7 and execute with precision.' },
+                            { title: 'Powerful Analytics', desc: 'Real-time market insights and advanced analytics to stay ahead.' },
+                            { title: 'Fast Execution', desc: 'Lightning-fast order execution with institutional grade speed.' },
+                            { title: 'Secure & Reliable', desc: 'Bank-grade security to protect your funds and data.' }
+                        ].map((feature, idx) => (
+                            <article key={idx} className='landing-page__feature-card'>
+                                <div className='landing-page__feature-icon'>●</div>
+                                <h3>
+                                    <Localize i18n_default_text={feature.title} />
+                                </h3>
+                                <p>
+                                    <Localize i18n_default_text={feature.desc} />
+                                </p>
+                            </article>
+                        ))}
+                    </section>
+
+                    <section className='landing-page__stats' id='pricing'>
+                        {[
+                            { value: '50K+', label: 'Active Traders' },
+                            { value: '98.7%', label: 'Success Rate' },
+                            { value: '$120M+', label: 'Total Volume' },
+                            { value: '99.9%', label: 'Uptime' }
+                        ].map((stat, idx) => (
+                            <div key={idx} className='landing-page__stat-item'>
+                                <div className='landing-page__stat-icon'>★</div>
+                                <div>
+                                    <div className='landing-page__stat-value'>{stat.value}</div>
+                                    <div className='landing-page__stat-label'>
+                                        <Localize i18n_default_text={stat.label} />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </section>
+                </main>
+
+                <footer className='landing-page__footer' id='about'>
+                    <div className='landing-page__footer-column'>
+                        <div className='landing-page__brand landing-page__brand--footer'>
+                            <span>HT</span>
+                            <span>TRADING</span>
+                        </div>
+                        <p>
+                            <Localize i18n_default_text='HT Trading is a next-generation automated trading platform built for traders who demand performance, security, and consistency.' />
+                        </p>
+                    </div>
+                    <div className='landing-page__footer-column'>
+                        <div className='landing-page__footer-title'>COMPANY</div>
+                        {['About Us', 'Our Mission', 'Blog', 'Careers'].map((item) => (
+                            <div key={item} className='landing-page__footer-link'>
+                                <Localize i18n_default_text={item} />
+                            </div>
+                        ))}
+                    </div>
+                    <div className='landing-page__footer-column'>
+                        <div className='landing-page__footer-title'>LEGAL</div>
+                        {['Terms & Conditions', 'Privacy Policy', 'Risk Disclosure', 'Refund Policy'].map((item) => (
+                            <div key={item} className='landing-page__footer-link'>
+                                <Localize i18n_default_text={item} />
+                            </div>
+                        ))}
+                    </div>
+                    <div className='landing-page__footer-column'>
+                        <div className='landing-page__footer-title'>SUPPORT</div>
+                        {['Help Center', 'Contact Us', 'Live Chat', 'Trading Guide'].map((item) => (
+                            <div key={item} className='landing-page__footer-link'>
+                                <Localize i18n_default_text={item} />
+                            </div>
+                        ))}
+                    </div>
+                    <p className='landing-page__copyright'>© 2026 HT Trading. All rights reserved.</p>
+                </footer>
+            </div>
+        </div>
+
+        {/* Kept modal layer logic intact */}
+        <Dialog
+            cancel_button_text={cancel_button_text || localize('Cancel')}
+            className='dc-dialog__wrapper--fixed'
+            confirm_button_text={ok_button_text || localize('Ok')}
+            has_close_icon
+            is_mobile_full_width={false}
+            is_visible={is_dialog_open}
+            onCancel={onCancelButtonClick}
+            onClose={onCloseDialog}
+            onConfirm={onOkButtonClick || onCloseDialog}
+            portal_element_id='modal_root'
+            title={title}
+            login={handleLoginGeneration}
+            dismissable={dismissable}
+            is_closed_on_cancel={is_closed_on_cancel}
+        >
+            {message}
+        </Dialog>
+    </React.Fragment>
+);
 });
 
 export default AppWrapper;

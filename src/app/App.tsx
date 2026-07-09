@@ -45,7 +45,8 @@ const router = createBrowserRouter(
                                 <LocalStorageSyncWrapper>
                                     <RoutePromptDialog />
                                     <CoreStoreProvider>
-                                        <Layout />
+                                        {/* SWAPPED: Changed <Layout /> to <AppRoot /> to bypass the layout header */}
+                                        <AppRoot />
                                     </CoreStoreProvider>
                                 </LocalStorageSyncWrapper>
                             </StoreProvider>
@@ -54,9 +55,8 @@ const router = createBrowserRouter(
                 </Suspense>
             }
         >
-            {/* All child routes will be passed as children to Layout */}
+            {/* Kept fallback routes intact */}
             <Route index element={<AppRoot />} />
-            {/* App Builder embeds the template at /preview — render the same app shell */}
             <Route path='preview' element={<AppRoot />} />
         </Route>
     ),
