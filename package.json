@@ -3,9 +3,10 @@
   "version": "0.2.0",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "scripts": {
+
     "dev": "rsbuild dev --port 4003",
     "build": "rsbuild build",
     "test": "jest",
